@@ -257,10 +257,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
 - [ ] API rate limiting
 - [ ] Document versioning
 
-## License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
-
 ## Support
 
 For issues, questions, or suggestions, please open an issue on GitHub.
