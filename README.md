@@ -148,24 +148,19 @@ Once all services are running, visit: `http://localhost:8000`
 agent-collaboration-platform/
 ├── src/
 │   ├── services/
-│   │   ├── __init__.py
 │   │   ├── analyst_service.py      # LLM-powered analysis agent
 │   │   ├── broker_service.py       # A2A message broker
 │   │   ├── frontend_service.py     # Web UI & orchestration
 │   │   ├── researcher_service.py   # Document creation agent
 │   │   └── mcp_registry.py         # Shared memory context
 │   └── __init__.py
-├── tests/
-│   └── __init__.py
-├── docs/
-│   └── ARCHITECTURE.md
-├── docker-compose.yml
-├── requirements.txt
-├── .env.example
-├── .gitignore
-├── README.md
-├── CONTRIBUTING.md
-└── setup.py
+├── tests/                          # Testing directory
+├── docker-compose.yml              # Docker multi-container setup
+├── Dockerfile                      # Container image
+├── requirements.txt                # Python dependencies
+├── .env.example                    # Environment configuration template
+├── .gitignore                      # Git exclusions
+└── README.md                       # This file
 ```
 
 ## API Endpoints
@@ -207,56 +202,6 @@ See `.env.example` for all available configuration options:
 ```bash
 pytest
 ```
-
-### Code Style
-
-This project follows PEP 8 guidelines. Format code with:
-
-```bash
-black src/
-```
-
-Lint with:
-
-```bash
-pylint src/
-```
-
-## Deployment
-
-### Docker
-
-Build and run with Docker:
-
-```bash
-docker build -t agent-collaboration-platform .
-docker run -p 8000:8000 -e GROQ_API_KEY=your_key agent-collaboration-platform
-```
-
-### Production Considerations
-
-- Use environment secrets manager (not `.env` files)
-- Deploy behind a reverse proxy (nginx/Apache)
-- Use persistent storage for MCP Registry
-- Add authentication/authorization
-- Enable CORS appropriately
-- Monitor service health
-- Set up proper logging
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
-
-## Roadmap
-
-- [ ] Persistent database backend for MCP Registry
-- [ ] Multiple LLM provider support
-- [ ] Agent authentication & authorization
-- [ ] Advanced routing and workflow orchestration
-- [ ] Performance monitoring & observability
-- [ ] Unit & integration tests
-- [ ] API rate limiting
-- [ ] Document versioning
 
 ## Support
 
