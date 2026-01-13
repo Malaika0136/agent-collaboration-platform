@@ -161,7 +161,6 @@ agent-collaboration-platform/
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
-├── LICENSE
 ├── README.md
 ├── CONTRIBUTING.md
 └── setup.py
