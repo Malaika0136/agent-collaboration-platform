@@ -2,6 +2,8 @@
 
 A distributed multi-agent system demonstrating asynchronous agent-to-agent communication with shared memory context using MCP (Memory Context Protocol).
 
+**Maintained by:** MalaikaNasir
+
 ## Overview
 
 This project showcases a modern architecture for building AI agent ecosystems where multiple specialized agents collaborate through message passing and shared memory, enabling complex workflows without tight coupling.
