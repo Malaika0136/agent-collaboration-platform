@@ -2,7 +2,7 @@
 
 A distributed multi-agent system demonstrating asynchronous agent-to-agent communication with shared memory context using MCP (Memory Context Protocol).
 
-**Maintained by:** MalaikaNasir
+**Maintained by:** Malaika Nasir
 
 ## Overview
 
