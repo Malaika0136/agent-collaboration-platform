@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  mcp-registry:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+    environment:
+      - MCP_REGISTRY_TOKEN=teacher-secret
+      - PYTHONUNBUFFERED=1
+    command: uvicorn src.services.mcp_registry:app --host 0.0.0.0 --port 7000
+    networks:
+      - agent-network
+
+  broker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7003:7003"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: uvicorn src.services.broker_service:app --host 0.0.0.0 --port 7003
+    networks:
+      - agent-network
+    depends_on:
+      - mcp-registry
+
+  analyst:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7002:7002"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - MCP_BASE=http://mcp-registry:7000/mcp
+      - MCP_REGISTRY_TOKEN=teacher-secret
+      - BROKER_URL=http://broker:7003
+      - PYTHONUNBUFFERED=1
+    command: uvicorn src.services.analyst_service:app --host 0.0.0.0 --port 7002
+    networks:
+      - agent-network
+    depends_on:
+      - mcp-registry
+      - broker
+
+  researcher:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7001:7001"
+    environment:
+      - MCP_BASE=http://mcp-registry:7000/mcp
+      - MCP_REGISTRY_TOKEN=teacher-secret
+      - BROKER_URL=http://broker:7003
+      - PYTHONUNBUFFERED=1
+    command: uvicorn src.services.researcher_service:app --host 0.0.0.0 --port 7001
+    networks:
+      - agent-network
+    depends_on:
+      - mcp-registry
+      - broker
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MCP_BASE=http://mcp-registry:7000/mcp
+      - MCP_REGISTRY_TOKEN=teacher-secret
+      - BROKER_URL=http://broker:7003
+      - ANALYST_URL=http://analyst:7002
+      - RESEARCHER_URL=http://researcher:7001
+      - PYTHONUNBUFFERED=1
+    command: uvicorn src.services.frontend_service:app --host 0.0.0.0 --port 8000
+    networks:
+      - agent-network
+    depends_on:
+      - mcp-registry
+      - broker
+      - analyst
+      - researcher
+
+networks:
+  agent-network:
+    driver: bridge
